@@ -516,6 +516,9 @@
       </div>
     </div>
     <div class="chat-actions">
+      <button class="icon-btn unlock-btn" id="unlockBtn" title="Odomknúť plnú verziu">
+        <svg viewBox="0 0 24 24" width="18" height="18"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V7a4 4 0 018 0" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
       <button class="icon-btn" id="crisisBtn" title="Potrebujem pomoc teraz">
         <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l10 18H2L12 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       </button>
@@ -524,9 +527,9 @@
       </button>
     </div>
   </header>
-  <div class="disclaimer">
-    Demo režim — odpovede sú vopred pripravené. Plná verzia čoskoro.
-    <button class="link-btn" data-waitlist>Pridaj sa na waitlist</button>
+  <div class="disclaimer" id="disclaimer">
+    <span id="disclaimerText">Demo — odpovede sú vopred pripravené.</span>
+    <button class="link-btn" id="disclaimerAction">Mám prístupový kód</button>
   </div>
   <div class="messages" id="messages" role="log" aria-live="polite"></div>
   <form class="composer" id="composer" autocomplete="off">
@@ -567,6 +570,39 @@
     <div class="waitlist-counter">
       <span class="dot-pulse"></span>
       <span><strong id="waitCount">2 847</strong> ľudí už čaká</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ UNLOCK MODAL ═══════════════════════════════ -->
+<div class="modal hidden" id="unlockModal" aria-hidden="true">
+  <div class="modal-card unlock">
+    <button class="modal-close" id="closeUnlock" aria-label="Zavrieť">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div class="unlock-logo">
+      <svg viewBox="0 0 24 24" width="38" height="38"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="url(#navLg)" stroke-width="1.6"/><path d="M8 11V7a4 4 0 018 0" fill="none" stroke="url(#navLg)" stroke-width="1.6"/></svg>
+    </div>
+    <h3 id="unlockTitle">Odomknúť plnú verziu</h3>
+    <p class="modal-sub" id="unlockSub">
+      Zadaj prístupový kód a získaj konverzáciu s reálnou Aurou — model Claude Haiku 4.5,
+      s pamäťou medzi sedeniami.
+    </p>
+    <form id="unlockForm" class="unlock-form">
+      <input type="password" id="unlockCodeInput" placeholder="prístupový kód" class="field-input" autocomplete="off" />
+      <button type="submit" class="btn-primary full" id="unlockSubmit">
+        <span>Odomknúť</span>
+      </button>
+    </form>
+    <p class="unlock-error hidden" id="unlockError">Neplatný kód. Skús znova.</p>
+    <div class="unlock-status hidden" id="unlockStatus">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <strong>Odomknuté</strong>
+      </div>
+      <p class="status-detail">Používaš <strong>Claude Haiku 4.5</strong>. Aura si teraz pamätá
+        dôležité veci o tebe medzi sedeniami.</p>
+      <button class="btn-ghost small" id="relockBtn">Zamknúť znova</button>
     </div>
   </div>
 </div>

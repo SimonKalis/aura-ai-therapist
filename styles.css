@@ -1427,6 +1427,86 @@ img, svg { display: block; max-width: 100%; }
   animation: blink 2s ease-in-out infinite;
 }
 
+/* Unlock modal */
+.modal-card.unlock h3 {
+  background: linear-gradient(120deg, var(--violet), var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.unlock-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 0 20px rgba(184,167,255,0.5));
+}
+.unlock-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.unlock-error {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--pink);
+  animation: shake 0.5s var(--ease-out);
+}
+.unlock-status {
+  padding: 22px 20px;
+  background: linear-gradient(135deg, rgba(125,224,255,0.12), rgba(184,167,255,0.1));
+  border: 1px solid rgba(125,224,255,0.3);
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: rgba(125,224,255,0.15);
+  border: 1px solid rgba(125,224,255,0.4);
+  border-radius: 999px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+.status-badge strong { color: var(--cyan); font-weight: 500; }
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+  animation: blink 2s ease-in-out infinite;
+}
+.status-detail {
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.status-detail strong { color: var(--ink); font-weight: 500; }
+
+/* Chat header: unlocked state visual */
+.chat.unlocked .presence-state {
+  color: var(--cyan);
+}
+.chat.unlocked .presence-name::after {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  margin-left: 8px;
+  vertical-align: middle;
+  animation: blink 2s ease-in-out infinite;
+}
+.unlock-btn.unlocked {
+  background: linear-gradient(135deg, rgba(184,167,255,0.2), rgba(125,224,255,0.2));
+  border-color: rgba(125,224,255,0.5);
+  color: var(--cyan);
+}
+
 /* Crisis modal */
 .modal-card.crisis h3 {
   background: linear-gradient(120deg, var(--pink), var(--violet));

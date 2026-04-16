@@ -1,17 +1,12 @@
 {
   "name": "aura-ai-therapist",
   "version": "1.0.0",
-  "description": "AI sprievodca duševnou pohodou — futuristický frontend + OpenAI backend",
+  "description": "AI sprievodca duševnou pohodou — landing + Vercel backend",
   "type": "module",
-  "main": "server.js",
+  "private": true,
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
-  },
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.21.2",
-    "openai": "^4.77.0"
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
   },
   "engines": {
     "node": ">=18"

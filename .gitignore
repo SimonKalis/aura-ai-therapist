@@ -5,6 +5,8 @@ node_modules/
 .env
 .env.local
 .env.*.local
+SECRETS.md
+.vercel
 
 # User-generated profiles (privacy)
 data/profiles/*.json
