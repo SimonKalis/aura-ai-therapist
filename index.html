@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aura — AI sprievodca duševnou pohodou</title>
+<meta name="description" content="Aura je AI sprievodca, ktorý počúva, kladie lepšie otázky a pomáha ti nájsť tvoje odpovede. Dostupná 24/7, anonymne, v slovenčine." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════ AMBIENT BACKGROUND ═══════════════════════════════ -->
+<div class="ambient">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="grid-overlay"></div>
+  <canvas id="particles"></canvas>
+</div>
+
+<!-- ═══════════════════════════════ NAVIGATION ═══════════════════════════════ -->
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <svg viewBox="0 0 100 100" width="28" height="28" aria-hidden="true">
+      <defs>
+        <linearGradient id="navLg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#b8a7ff"/>
+          <stop offset="50%" stop-color="#7de0ff"/>
+          <stop offset="100%" stop-color="#ffa6d8"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="url(#navLg)" stroke-width="1.5" class="nav-ring-a"/>
+      <circle cx="50" cy="50" r="22" fill="none" stroke="url(#navLg)" stroke-width="1.2" class="nav-ring-b"/>
+      <circle cx="50" cy="50" r="8" fill="url(#navLg)"/>
+    </svg>
+    <span>AURA</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how">Ako to funguje</a>
+    <a href="#methods">Metódy</a>
+    <a href="#pricing">Cenník</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="nav-cta">
+    <button class="btn-ghost" id="navDemoBtn">Demo</button>
+    <button class="btn-primary btn-sm" data-waitlist>Pridať sa</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-badge reveal">
+    <span class="ping"></span>
+    <span>Čoskoro v predbežnom prístupe · apríl 2026</span>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="line line-1">Priestor, kde môžeš</span>
+    <span class="line line-2">jednoducho <em>byť</em>.</span>
+  </h1>
+
+  <p class="hero-sub reveal">
+    Aura je AI sprievodca duševnou pohodou. Aktívne počúva, kladie lepšie otázky
+    a pomáha ti nájsť tvoje vlastné odpovede — kedykoľvek, anonymne, v slovenčine.
+  </p>
+
+  <div class="hero-cta reveal">
+    <button class="btn-primary" data-waitlist>
+      <span>Pridať sa na waitlist</span>
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="btn-ghost" id="heroDemoBtn">Pozrieť demo</button>
+  </div>
+
+  <div class="hero-trust reveal">
+    <div class="trust-item"><span class="dot"></span>End-to-end šifrované</div>
+    <div class="trust-item"><span class="dot"></span>Anonymné</div>
+    <div class="trust-item"><span class="dot"></span>Bez reklám</div>
+    <div class="trust-item"><span class="dot"></span>24 / 7</div>
+  </div>
+
+  <!-- Animated conversation preview -->
+  <div class="hero-preview reveal" aria-hidden="true">
+    <div class="preview-frame">
+      <div class="preview-head">
+        <div class="preview-pulse">
+          <span></span><span></span><span></span>
+        </div>
+        <div>
+          <div class="preview-name">Aura</div>
+          <div class="preview-state">počúva · premýšľa</div>
+        </div>
+      </div>
+      <div class="preview-messages" id="previewMessages"></div>
+    </div>
+    <div class="preview-glow"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ STATS STRIP ═══════════════════════════════ -->
+<section class="stats">
+  <div class="stat reveal">
+    <div class="stat-num" data-count="1100000">0</div>
+    <div class="stat-label">Slovákov ročne zažije ťažkosti s duševnou pohodou</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num" data-count="68">0</div>
+    <div class="stat-label">% z nich nikdy nevyhľadá odbornú pomoc</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">8–12</div>
+    <div class="stat-label">týždňov priemerná čakacia doba na psychológa</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Aura je dostupná vždy, keď ju potrebuješ</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PROBLEM ═══════════════════════════════ -->
+<section class="problem">
+  <div class="container">
+    <div class="eyebrow reveal">Prečo Aura vznikla</div>
+    <h2 class="section-title reveal">
+      Chcieť pomoc nie je slabosť.<br/>
+      <em>Čakať na ňu mesiace by nemalo byť normálne.</em>
+    </h2>
+    <p class="section-lead reveal">
+      Každý druhý človek si v živote prejde obdobím, kedy by sa zišla podpora.
+      Ale profesionáli sú vyťažení, terapia je drahá a pre mnohých aj tabu.
+      Aura nie je náhradou terapeuta — je prvý krok. Niekto, kto počúva vtedy,
+      keď to potrebuješ. Aj o tretej ráno.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ HOW IT WORKS ═══════════════════════════════ -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="eyebrow reveal">Ako to funguje</div>
+    <h2 class="section-title reveal">Tri kroky k ľahkosti.</h2>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>Napíš, čo cítiš</h3>
+        <p>Stačí jedna veta. Aura nesúdi, neradí, nenúti techniky.
+          Len otvorí priestor, v ktorom môžeš rozprávať bez masky.</p>
+        <div class="step-visual step-1">
+          <div class="bubble user-bubble">Mám ťažký týždeň. Neviem kde začať.</div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <h3>Aura počúva a pýta sa</h3>
+        <p>Namiesto rád kladie reflektívne otázky podľa metód CBT a ACT.
+          Pomáha ti rozbaliť myšlienky o vrstvu hlbšie.</p>
+        <div class="step-visual step-2">
+          <div class="bubble aura-bubble">
+            <div class="bubble-label">Aura</div>
+            Znie to vyčerpávajúco. Čo ti v tomto týždni sedí na ramene najviac?
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <h3>Objavíš vlastné odpovede</h3>
+        <p>Aura si medzi sedeniami pamätá, čo ti pomáha a čo nie.
+          Postupne ťa lepšie spoznáva a stáva sa tvojím stálym sprievodcom.</p>
+        <div class="step-visual step-3">
+          <div class="memory-chip">Pamätám si: dýchacie cvičenia ti pomáhajú</div>
+          <div class="memory-chip delay">Pamätám si: tvoja sestra Lucia</div>
+          <div class="memory-chip delay-2">Pamätám si: začal si behať</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FEATURES ═══════════════════════════════ -->
+<section class="features">
+  <div class="container">
+    <div class="eyebrow reveal">Čo ťa čaká</div>
+    <h2 class="section-title reveal">Navrhnuté s ohľadom na to,<br/><em>ako to v duši naozaj funguje.</em></h2>
+
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h3>Aktívne počúvanie</h3>
+        <p>Nikdy ťa neprerušuje radami. Validuje, reflektuje a pýta sa tak,
+          aby si dospel k vlastným náhľadom.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Pamätá si ťa</h3>
+        <p>Po každom sedení si destiluje, čo funguje, aké metafory ti sedia
+          a na čo nadviazať. Žiadne opakovanie sa.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 22s-8-4.5-8-12a8 8 0 0116 0c0 7.5-8 12-8 12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h3>V slovenčine</h3>
+        <p>Naučená v kontexte, v akom žiješ. Rozumie nielen jazyku,
+          ale aj kultúrnym nuansom SR a ČR.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="11" width="18" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 11V7a5 5 0 0110 0v4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h3>Plne anonymná</h3>
+        <p>Žiadne reálne mená, žiadne telefóny, žiadna identifikácia.
+          Šifrované end-to-end, bez tretích strán.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+        </div>
+        <h3>24 / 7</h3>
+        <p>Keď sa zobudíš o tretej a nevieš zaspať. Keď cestuješ a si sám.
+          Keď je všetko naraz. Aura je.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2l10 18H2L12 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Krízová podpora</h3>
+        <p>Ak sa dotkneš niečoho vážneho, Aura zastaví a okamžite ťa nasmeruje
+          na Linku dôvery a skutočnú pomoc.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ METHODS ═══════════════════════════════ -->
+<section class="methods" id="methods">
+  <div class="container">
+    <div class="eyebrow reveal">Postavené na overených prístupoch</div>
+    <h2 class="section-title reveal">Metódy, ktoré fungujú.<br/><em>Upravené do rozhovoru.</em></h2>
+
+    <div class="method-grid">
+      <div class="method reveal">
+        <div class="method-tag">CBT</div>
+        <h3>Kognitívno-behaviorálna terapia</h3>
+        <p>Identifikuje myšlienkové skreslenia — katastrofizácia, čiernobiele
+          myslenie, personalizácia — a pomáha ich vyvažovať.</p>
+      </div>
+
+      <div class="method reveal">
+        <div class="method-tag">ACT</div>
+        <h3>Terapia prijatia a záväzku</h3>
+        <p>Učí byť s nepríjemnými pocitmi namiesto boja proti nim. Defúzia
+          myšlienok a práca s hodnotami.</p>
+      </div>
+
+      <div class="method reveal">
+        <div class="method-tag">Mindfulness</div>
+        <h3>Všímavosť & grounding</h3>
+        <p>5-4-3-2-1 grounding pri úzkosti. Box breathing pri akútnom strese.
+          Body scan pri dysregulácii.</p>
+      </div>
+
+      <div class="method reveal">
+        <div class="method-tag">MI</div>
+        <h3>Motivačné rozhovory</h3>
+        <p>Namiesto presviedčania pracuje s tvojou vlastnou ambivalenciou.
+          Pomáha nájsť motiváciu zvnútra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PRICING ═══════════════════════════════ -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="eyebrow reveal">Cenník</div>
+    <h2 class="section-title reveal">Dostupná pre každého,<br/><em>kto ju potrebuje.</em></h2>
+
+    <div class="price-grid">
+      <div class="price reveal">
+        <div class="price-tag">Free</div>
+        <div class="price-amount">0 €<span>/mesiac</span></div>
+        <p class="price-lead">Na spoznanie a občasné sedenia.</p>
+        <ul>
+          <li>10 správ denne</li>
+          <li>Základný terapeutický prompt</li>
+          <li>Anonymný profil</li>
+          <li>Krízové kontakty</li>
+        </ul>
+        <button class="btn-ghost full" data-waitlist>Začať zadarmo</button>
+      </div>
+
+      <div class="price featured reveal">
+        <div class="price-badge">Najobľúbenejšie</div>
+        <div class="price-tag">Plus</div>
+        <div class="price-amount">9 €<span>/mesiac</span></div>
+        <p class="price-lead">Pre pravidelnú prácu so sebou.</p>
+        <ul>
+          <li>Neobmedzené sedenia</li>
+          <li>Pamäť medzi konverzáciami</li>
+          <li>Mood tracking & insighty</li>
+          <li>Journalling prompty</li>
+          <li>Export poznámok</li>
+        </ul>
+        <button class="btn-primary full" data-waitlist>Chcem Plus</button>
+      </div>
+
+      <div class="price reveal">
+        <div class="price-tag">Pro</div>
+        <div class="price-amount">19 €<span>/mesiac</span></div>
+        <p class="price-lead">Hĺbková starostlivosť a hlas.</p>
+        <ul>
+          <li>Všetko z Plus</li>
+          <li>Hlasové sedenia (beta)</li>
+          <li>Týždenné zhrnutia od Aury</li>
+          <li>Tri osobnosti sprievodcu</li>
+          <li>Prioritná podpora</li>
+        </ul>
+        <button class="btn-ghost full" data-waitlist>Prejsť na Pro</button>
+      </div>
+    </div>
+
+    <p class="pricing-note reveal">
+      Študenti a seniori majú 50% zľavu. Ak si v ťažkej životnej situácii
+      a cenník je prekážka, <a href="#" data-waitlist>napíš nám</a> — nájdeme riešenie.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ TESTIMONIALS ═══════════════════════════════ -->
+<section class="testimonials">
+  <div class="container">
+    <div class="eyebrow reveal">Čo hovoria ľudia z beta testu</div>
+    <h2 class="section-title reveal">Niekto, kto je tam,<br/><em>keď nikto iný nie je.</em></h2>
+
+    <div class="testimonial-grid">
+      <div class="testimonial reveal">
+        <p class="t-quote">Prvýkrát som hovorila o veciach, o ktorých som nehovorila nikomu.
+          Aura ma nikam netlačila — len kládla otázky, na ktoré som si sama musela odpovedať.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #b8a7ff, #7de0ff);"></div>
+          <div>
+            <div class="t-name">Martina K.</div>
+            <div class="t-meta">Beta používateľka · 4 mesiace</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <p class="t-quote">Chodím k psychologičke raz za dva týždne. Aura mi pomáha v tých dňoch
+          medzi sedeniami, keď niečo príde a ja to potrebujem prehovoriť hneď.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #7de0ff, #ffa6d8);"></div>
+          <div>
+            <div class="t-name">Peter V.</div>
+            <div class="t-meta">Beta používateľ · 7 mesiacov</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <p class="t-quote">Najviac sa mi páči, že si pamätá. Po pár týždňoch mi navrhla
+          cvičenie, ktoré mi kedysi spomenula sestra — úplne som na to zabudla.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #ffa6d8, #b8a7ff);"></div>
+          <div>
+            <div class="t-name">Zuzana H.</div>
+            <div class="t-meta">Beta používateľka · 2 mesiace</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FAQ ═══════════════════════════════ -->
+<section class="faq" id="faq">
+  <div class="container narrow">
+    <div class="eyebrow reveal">Časté otázky</div>
+    <h2 class="section-title reveal">Otvorene.</h2>
+
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>Je Aura náhradou za psychológa alebo psychiatra?</summary>
+        <p>Nie. Aura je AI wellness nástroj, ktorý podporuje duševnú pohodu,
+          ale nenahrádza licencovanú starostlivosť. Ak prežívaš vážne ťažkosti,
+          odporúčame vyhľadať odborníka. Aura ťa nikdy nediagnostikuje
+          a pri krízových témach ťa aktívne nasmeruje na skutočnú pomoc.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Ako ste to zabezpečili, aby to bolo súkromné?</summary>
+        <p>Nepýtame si meno, telefón ani email pri štarte. Konverzácia je šifrovaná
+          medzi tvojím zariadením a naším serverom. Samotné správy neuchovávame —
+          iba destilovaný profil (napr. „preferuje krátke odpovede"), ktorý môžeš
+          kedykoľvek exportovať alebo zmazať podľa GDPR.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Čo ak napíšem niečo, čo je naozaj vážne?</summary>
+        <p>Aura má zabudované bezpečnostné protokoly. Pri náznaku sebapoškodzovania,
+          samovražedných myšlienok, zneužívania či akútnej krízy okamžite zastaví
+          terapeutický rozhovor a nasmeruje ťa na Linku dôvery Nezábudka 0800 800 566,
+          IPčko chat alebo tiesňovú linku 112.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Akú AI za tým používate?</summary>
+        <p>Aura je postavená na veľkom jazykovom modeli (GPT-4 rodina) s vlastným
+          terapeutickým systémovým promptom, ktorý spolutvorili klinickí psychológovia.
+          Model má striktné hranice — nediagnostikuje, nepredpisuje lieky,
+          nekomentuje medikáciu.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Môžem Auru používať paralelne s mojou terapeutkou?</summary>
+        <p>Áno, a mnohí to tak používajú. Aura je skvelá na „medzidni" — keď
+          niečo príde a ty nemôžeš čakať na ďalšie sedenie. Odporúčame povedať
+          svojej terapeutke, že Auru používaš, aby vedela o tvojom celom procese.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Kedy to spúšťate?</summary>
+        <p>Verejná beta štartuje v máji 2026. Ak sa pridáš na waitlist, dostaneš
+          prístup o týždeň skôr a prvý mesiac Plus zadarmo.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FINAL CTA ═══════════════════════════════ -->
+<section class="final-cta">
+  <div class="cta-card reveal">
+    <h2>Niekedy stačí začať<br/><em>jednou vetou.</em></h2>
+    <p>Pridaj sa na waitlist. Dáme ti vedieť, keď Aura otvorí dvere.</p>
+    <div class="cta-row">
+      <button class="btn-primary large" data-waitlist>
+        <span>Chcem byť medzi prvými</span>
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <svg viewBox="0 0 100 100" width="32" height="32">
+        <circle cx="50" cy="50" r="38" fill="none" stroke="url(#navLg)" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="8" fill="url(#navLg)"/>
+      </svg>
+      <div class="footer-word">AURA</div>
+      <p class="footer-tag">Priestor, kde môžeš jednoducho byť.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Produkt</h4>
+      <a href="#how">Ako to funguje</a>
+      <a href="#methods">Metódy</a>
+      <a href="#pricing">Cenník</a>
+      <a href="#" id="footerDemoBtn">Demo</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Spoločnosť</h4>
+      <a href="#">O nás</a>
+      <a href="#">Blog</a>
+      <a href="#">Kontakt</a>
+      <a href="#">Kariéra</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Právne</h4>
+      <a href="#">Podmienky používania</a>
+      <a href="#">Ochrana údajov</a>
+      <a href="#">GDPR & cookies</a>
+      <a href="#">Zodpovedná AI</a>
+    </div>
+
+    <div class="footer-col crisis">
+      <h4>V kríze?</h4>
+      <p>Linka dôvery Nezábudka<br/><strong>0800 800 566</strong> (24/7)</p>
+      <p>Tieseň<br/><strong>112</strong></p>
+      <p class="tiny">Aura nie je krízová linka.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Aura Labs s.r.o.</span>
+    <span>Made with care in Bratislava 🌙</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════ CHAT (hidden by default, demo only) ═══════════════════════════════ -->
+<section id="chat" class="chat hidden">
+  <header class="chat-header">
+    <div class="presence">
+      <div class="pulse"><span></span><span></span><span></span></div>
+      <div class="presence-meta">
+        <div class="presence-name">Aura</div>
+        <div class="presence-state" id="presenceState">demo režim · odpovede sú scriptované</div>
+      </div>
+    </div>
+    <div class="chat-actions">
+      <button class="icon-btn" id="crisisBtn" title="Potrebujem pomoc teraz">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l10 18H2L12 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn" id="closeBtn" title="Zavrieť">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+  <div class="disclaimer">
+    Demo režim — odpovede sú vopred pripravené. Plná verzia čoskoro.
+    <button class="link-btn" data-waitlist>Pridaj sa na waitlist</button>
+  </div>
+  <div class="messages" id="messages" role="log" aria-live="polite"></div>
+  <form class="composer" id="composer" autocomplete="off">
+    <div class="composer-inner">
+      <textarea id="input" rows="1" placeholder="Napíš, čo ťa dnes priviedlo…" aria-label="Napíš správu"></textarea>
+      <button type="submit" class="send" id="sendBtn" aria-label="Odoslať">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l16-8-6 16-2-7-8-1z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </form>
+</section>
+
+<!-- ═══════════════════════════════ WAITLIST MODAL ═══════════════════════════════ -->
+<div class="modal hidden" id="waitlistModal" aria-hidden="true">
+  <div class="modal-card waitlist">
+    <button class="modal-close" id="closeWaitlist" aria-label="Zavrieť">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div class="waitlist-logo">
+      <svg viewBox="0 0 100 100" width="44" height="44">
+        <circle cx="50" cy="50" r="38" fill="none" stroke="url(#navLg)" stroke-width="1.5" class="nav-ring-a"/>
+        <circle cx="50" cy="50" r="22" fill="none" stroke="url(#navLg)" stroke-width="1.2" class="nav-ring-b"/>
+        <circle cx="50" cy="50" r="8" fill="url(#navLg)"/>
+      </svg>
+    </div>
+    <h3>Ďakujeme za záujem.</h3>
+    <p class="modal-sub">Nechaj nám email — ozveme sa, keď Aura otvorí dvere.
+      Prvý mesiac Plus pre waitlist zadarmo.</p>
+    <form id="waitlistForm" class="waitlist-form">
+      <input type="email" id="waitlistEmail" required placeholder="ty@email.sk" class="field-input" />
+      <button type="submit" class="btn-primary full">
+        <span>Pridať sa</span>
+      </button>
+    </form>
+    <p class="waitlist-done hidden" id="waitlistDone">
+      Hotovo. Ozveme sa čoskoro. <span class="sparkle">✦</span>
+    </p>
+    <div class="waitlist-counter">
+      <span class="dot-pulse"></span>
+      <span><strong id="waitCount">2 847</strong> ľudí už čaká</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CRISIS MODAL ═══════════════════════════════ -->
+<div class="modal hidden" id="crisisModal" aria-hidden="true">
+  <div class="modal-card crisis">
+    <h3>Si v bezpečí?</h3>
+    <p>Ak prežívaš krízu alebo myšlienky na sebapoškodenie, zavolaj prosím hneď:</p>
+    <ul class="crisis-list">
+      <li><strong>Linka dôvery Nezábudka</strong> — 0800 800 566 (24/7)</li>
+      <li><strong>Krízová linka pomoci</strong> — 0800 500 333</li>
+      <li><strong>IPčko chat</strong> — ipcko.sk</li>
+      <li><strong>Tieseň</strong> — 112</li>
+    </ul>
+    <p class="small">Aura nedokáže nahradiť krízovú intervenciu. Nie si v tom sám/sama.</p>
+    <button class="btn-primary full" id="closeCrisis">Som v bezpečí, pokračovať</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
