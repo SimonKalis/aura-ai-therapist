@@ -327,12 +327,12 @@ function openDemo() {
   state.turns = 0;
   applyUnlockState();
   addMessage("aura", welcomeForMode());
-  document.body.style.overflow = "hidden";
+  document.body.classList.add("chat-open");
   setTimeout(() => input.focus(), 300);
 }
 function closeDemo() {
   chatEl.classList.add("hidden");
-  document.body.style.overflow = "";
+  document.body.classList.remove("chat-open");
   // If unlocked + meaningful conversation, run background profile extraction
   if (isUnlocked() && state.history.length >= 4) {
     extractProfileBg().catch(() => {});
