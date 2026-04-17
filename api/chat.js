@@ -68,7 +68,7 @@ Najväčšia sila: ticho, priestor, jedna dobrá otázka. Si s ním.
 PROFIL POUŽÍVATEĽA:
 {{USER_PROFILE}}`;
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
